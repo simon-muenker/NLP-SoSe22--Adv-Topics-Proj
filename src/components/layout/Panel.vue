@@ -14,7 +14,7 @@ export default {
 
 <style scoped>
 section {
-  padding: 32px;
+  padding: 32px 64px;
 }
 h3 {
   margin-bottom: 16px;

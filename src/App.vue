@@ -4,11 +4,14 @@
       <CategorySlider
           :categories="cluster"
           :setMethod="setActiveCluster"
+          direction="ltr"
           title="Cluster Slider (by DBSCAN)"
       />
       <CategorySlider
           :categories="group"
           :setMethod="setActiveGroup"
+          direction="ttb"
+          style="height: 768px"
           title="Group Slider (by Month)"
       />
     </Sidebar>
@@ -17,6 +20,13 @@
         :data="records"
         :group="activeGroup"
     />
+    <Sidebar pos="right">
+      <SampleList
+          :cluster="activeCluster"
+          :data="records"
+          :group="activeGroup"
+      />
+    </Sidebar>
   </template>
   <template v-else>
     Loading...
@@ -28,6 +38,7 @@ import Sidebar from "@/components/layout/Sidebar.vue";
 
 import CategorySlider from "@/components/CategorySlider.vue";
 import Graph from '@/components/graph/Graph.vue'
+import SampleList from "@/components/SampleList.vue";
 
 
 import './App.css'
@@ -38,6 +49,7 @@ const DATA_URL = 'https://data.sci.xciv.de/temporal_corona_clustering/cluster.ma
 export default {
   name: 'App',
   components: {
+    SampleList,
     Sidebar,
     CategorySlider,
     Graph,
@@ -47,8 +59,8 @@ export default {
       records: [],
       group: [],
       cluster: [],
-      activeGroup: null,
-      activeCluster: null,
+      activeGroup: "All Groups",
+      activeCluster: "All Cluster",
       isLoaded: false,
 
     }
@@ -58,7 +70,7 @@ export default {
       this.records = values
       this.isLoaded = true
 
-      this.cluster = ["All Cluster"].concat(Array.from(new Set(values.map(a => a.cluster))))
+      this.cluster = ["All Cluster"].concat(Array.from(new Set(values.map(a => a.cluster))).sort())
       this.group = ["All Groups"].concat(Array.from(new Set(values.map(a => a.datetime))))
     })
   },

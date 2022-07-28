@@ -1,12 +1,12 @@
 <template>
-  <Panel title="Group Slider (by Month):">
+  <Panel :title="title">
     <vue-slider
         :data="categories"
         :direction="direction"
+        :style="style"
         :marks="true"
         adsorb="true"
         drag-on-click="true"
-        style="margin-left: 48px; height: 50vh;"
         @change="val => setMethod(val)"
     >
     </vue-slider>
@@ -26,12 +26,18 @@ export default {
     VueSlider
   },
   props: {
+    title: String,
     categories: Array,
     setMethod: Function,
     direction: {
-      type: "ltr" | "rtl" | "ttb" | "btt" | undefined,
+      type: String,
       default: "ttb"
-    }
+    },
+    style: String
   }
 }
 </script>
+
+<style scoped>
+
+</style>
