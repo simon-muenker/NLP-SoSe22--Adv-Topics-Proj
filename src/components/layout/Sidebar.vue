@@ -18,12 +18,16 @@ article {
   top: 0;
   z-index: 999;
 
-  width: 360px;
+  width: 288px;
   height: 100vh;
   overflow-y: scroll;
 
   background: var(--color-background-translucent);
   backdrop-filter: blur(16px);
+}
+
+@media screen and (min-width:1440px) {
+  article {width: 360px}
 }
 
 .right {
