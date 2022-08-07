@@ -1,12 +1,12 @@
 <template>
   <Panel :title="title">
     <vue-slider
-        :data="categories"
+        :data="options"
         :direction="direction"
         :style="style"
         :marks="true"
         tooltip="none"
-        @change="val => setMethod(val)"
+        @change="val => onUpdate(val)"
     >
     </vue-slider>
   </Panel>
@@ -19,15 +19,15 @@ import 'vue-slider-component/theme/default.css'
 import Panel from "@/components/layout/Panel.vue"
 
 export default {
-  name: "CategorySlider",
+  name: "Slider",
   components: {
     Panel,
     VueSlider
   },
   props: {
     title: String,
-    categories: Array,
-    setMethod: Function,
+    options: Array,
+    onUpdate: Function,
     direction: {
       type: String,
       default: "ttb"

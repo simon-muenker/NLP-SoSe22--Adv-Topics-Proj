@@ -25,7 +25,6 @@ export default {
     }
   },
   mounted() {
-    console.log('> Mount Graph, create DataPoints')
     window.addEventListener('resize', this.onWindowResize, false)
 
     this.scene = new THREE.Scene()

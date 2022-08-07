@@ -1,10 +1,10 @@
 <template>
-  <Panel title="Datasets">
+  <Panel :title="title">
     <v-select
-        :options="datasets"
+        :options="options"
         :placeholder="value"
         label="name"
-        @option:selected="update"
+        @option:selected="val => onUpdate(val)"
     ></v-select>
   </Panel>
 </template>
@@ -16,27 +16,16 @@ import Panel from "@/components/layout/Panel.vue";
 import 'vue-select/dist/vue-select.css';
 
 export default {
-  name: "DataSelect",
+  name: "Select",
   components: {
     Panel,
     vSelect
   },
   props: {
-    value: Object,
-    datasets: Array,
+    title: String,
+    value: String,
+    options: Array,
     onUpdate: Function
-  },
-  data() {
-    return {
-      selected: Object,
-    }
-  },
-  methods: {
-    update(value) {
-      console.log(value)
-      this.selected = value
-      this.onUpdate(value)
-    }
   }
 }
 </script>

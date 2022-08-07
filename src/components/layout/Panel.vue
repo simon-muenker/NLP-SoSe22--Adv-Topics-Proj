@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3>{{title}}</h3>
+    <h3>{{ title }}</h3>
     <slot></slot>
   </section>
 </template>
@@ -14,10 +14,11 @@ export default {
 
 <style scoped>
 section {
-  padding: 32px 32px;
+  padding: 1.5rem;
 }
+
 h3 {
-  font-size: 1.4em;
-  margin-bottom: 16px;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
 }
 </style>

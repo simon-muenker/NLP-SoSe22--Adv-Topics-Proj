@@ -1,8 +1,10 @@
 <template>
   <Panel :title="'Cluster: ' + cluster + ' | Group: ' + group">
-    <p v-for="item in this.points" :class="item.state">
-      {{ item.text }}
-    </p>
+    <template v-for="point in this.points">
+      <p v-if="point.show">
+        {{ point.text }}
+      </p>
+    </template>
   </Panel>
 </template>
 
@@ -25,20 +27,14 @@ export default {
     }
   },
   mounted() {
-    this.points = this.data.map(obj => ({ ...obj, state: 'show' }))
+    this.points = this.data.map(obj => ({...obj, show: true}))
   },
   updated() {
     this.points.forEach((point) => {
-      if (
-          (this.cluster === "All" && this.group === "All") ||
+      point.show = (this.cluster === "All" && this.group === "All") ||
           (point.cluster === this.cluster && this.group === "All") ||
           (this.cluster === "All" && point.datetime === this.group) ||
-          (point.cluster === this.cluster && point.datetime === this.group)
-      ) {
-        point.state = "show"
-      } else {
-        point.state = "hide"
-      }
+          (point.cluster === this.cluster && point.datetime === this.group);
     })
   }
 }
@@ -49,15 +45,13 @@ export default {
 p {
   display: block;
 
-  margin-bottom: 16px;
-  padding-bottom: 8px;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
 
   border-bottom: 1px solid var(--color-border);
 }
-.show {
-  display: block;
-}
-.hide {
-  display: None;
+
+p:last-of-type {
+  border-bottom: 0;
 }
 </style>

@@ -25,6 +25,7 @@ article {
   background: var(--color-background-translucent);
   backdrop-filter: blur(16px);
 }
+
 .right {
   right: 0;
   direction: rtl;
