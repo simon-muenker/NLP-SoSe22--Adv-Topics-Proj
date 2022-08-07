@@ -13,17 +13,17 @@ export default {
 
 <style scoped>
 article {
-  position: absolute;
+  position: fixed;
 
   top: 0;
   z-index: 999;
 
-  min-width: 320px;
-  width: auto;
-  max-width: 480px;
-
+  width: 360px;
   height: 100vh;
   overflow-y: scroll;
+
+  background: var(--color-background-translucent);
+  backdrop-filter: blur(16px);
 }
 .right {
   right: 0;

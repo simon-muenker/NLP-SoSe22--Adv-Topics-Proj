@@ -16,18 +16,23 @@ export default {
   },
   data() {
     return {
-      scene: new THREE.Scene(),
-      camera: new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 256),
-      renderer: new THREE.WebGLRenderer({antialias: true}),
+      scene: null,
+      camera: null,
+      renderer: null,
       controls: null,
-      points: []
+      points: [],
+      __requestID: null
     }
   },
-  created() {
+  mounted() {
+    console.log('> Mount Graph, create DataPoints')
     window.addEventListener('resize', this.onWindowResize, false)
 
+    this.scene = new THREE.Scene()
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 256)
     this.camera.position.z = 32
 
+    this.renderer = new THREE.WebGLRenderer({antialias: true})
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     this.renderer.setClearColor(0xffffff, 0)
@@ -75,9 +80,9 @@ export default {
   updated() {
     this.points.forEach((point) => {
       if (
-          (this.cluster === "All Cluster" && this.group === "All Groups") ||
-          (point.userData.cluster === this.cluster && this.group === "All Groups") ||
-          (this.cluster === "All Cluster" && point.userData.group === this.group) ||
+          (this.cluster === "All" && this.group === "All") ||
+          (point.userData.cluster === this.cluster && this.group === "All") ||
+          (this.cluster === "All" && point.userData.group === this.group) ||
           (point.userData.cluster === this.cluster && point.userData.group === this.group)
       ) {
         point.material.opacity = 1.0
@@ -85,6 +90,16 @@ export default {
         point.material.opacity = 0.1
       }
     })
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.onWindowResize, true)
+    cancelAnimationFrame(this.__requestID)
+    document.body.removeChild(this.renderer.domElement)
+
+    this.scene = null
+    this.camera = null
+    this.renderer = null
+    this.controls = null
   },
   methods: {
     onWindowResize() {
@@ -98,12 +113,10 @@ export default {
       this.renderer.render(toRaw(this.scene), toRaw(this.camera))
     },
     animate() {
-      requestAnimationFrame(this.animate)
+      this.__requestID = requestAnimationFrame(this.animate)
       this.controls.update()
       this.render()
     }
   }
 }
 </script>
-
-

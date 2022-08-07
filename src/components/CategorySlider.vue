@@ -5,8 +5,7 @@
         :direction="direction"
         :style="style"
         :marks="true"
-        adsorb="true"
-        drag-on-click="true"
+        tooltip="none"
         @change="val => setMethod(val)"
     >
     </vue-slider>
@@ -33,11 +32,10 @@ export default {
       type: String,
       default: "ttb"
     },
-    style: String
+    style: Object
   }
 }
 </script>
 
 <style scoped>
-
 </style>

@@ -24,15 +24,15 @@ export default {
       points: Array
     }
   },
-  created() {
+  mounted() {
     this.points = this.data.map(obj => ({ ...obj, state: 'show' }))
   },
   updated() {
     this.points.forEach((point) => {
       if (
-          (this.cluster === "All Cluster" && this.group === "All Groups") ||
-          (point.cluster === this.cluster && this.group === "All Groups") ||
-          (this.cluster === "All Cluster" && point.datetime === this.group) ||
+          (this.cluster === "All" && this.group === "All") ||
+          (point.cluster === this.cluster && this.group === "All") ||
+          (this.cluster === "All" && point.datetime === this.group) ||
           (point.cluster === this.cluster && point.datetime === this.group)
       ) {
         point.state = "show"
@@ -52,7 +52,7 @@ p {
   margin-bottom: 16px;
   padding-bottom: 8px;
 
-  border-bottom: 1px solid  #282828;
+  border-bottom: 1px solid var(--color-border);
 }
 .show {
   display: block;

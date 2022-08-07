@@ -1,23 +1,21 @@
 <template>
   <section>
-    <h3>{{title}}</h3>
     <slot></slot>
   </section>
 </template>
 
 <script>
 export default {
-  name: "Panel",
-  props: ['title'],
+  name: "Popup",
 }
 </script>
 
 <style scoped>
 section {
-  padding: 32px 32px;
-}
-h3 {
-  font-size: 1.4em;
-  margin-bottom: 16px;
+  height: 100vh;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 </style>
