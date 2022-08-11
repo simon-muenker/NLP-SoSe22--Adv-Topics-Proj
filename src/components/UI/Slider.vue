@@ -3,8 +3,8 @@
     <vue-slider
         :data="options"
         :direction="direction"
-        :style="style"
         :marks="true"
+        :style="style"
         tooltip="none"
         @change="val => onUpdate(val)"
     >
@@ -16,7 +16,7 @@
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 
-import Panel from "@/components/layout/Panel.vue"
+import Panel from "@/components/Layout/Panel.vue"
 
 export default {
   name: "Slider",
@@ -25,12 +25,21 @@ export default {
     VueSlider
   },
   props: {
-    title: String,
-    options: Array,
-    onUpdate: Function,
+    title: {
+      type: String,
+      default: 'Slider Title'
+    },
+    options: {
+      type: Array,
+      default: []
+    },
+    onUpdate: {
+      type: Function,
+      default: (val) => console.log(val)
+    },
     direction: {
       type: String,
-      default: "ttb"
+      default: 'ttb',
     },
     style: Object
   }

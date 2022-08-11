@@ -10,22 +10,34 @@
 </template>
 
 <script>
-import vSelect from "vue-select";
-import Panel from "@/components/layout/Panel.vue";
+import vSelect from 'vue-select'
+import Panel from '@/components/Layout/Panel.vue'
 
-import 'vue-select/dist/vue-select.css';
+import 'vue-select/dist/vue-select.css'
 
 export default {
-  name: "Select",
+  name: 'Select',
   components: {
     Panel,
     vSelect
   },
   props: {
-    title: String,
-    value: String,
-    options: Array,
-    onUpdate: Function
+    title: {
+      type: String,
+      default: 'Select Title'
+    },
+    value: {
+      type: String,
+      default: ''
+    },
+    options: {
+      type: Array,
+      default: []
+    },
+    onUpdate: {
+      type: Function,
+      default: (val) => console.log(val)
+    }
   }
 }
 </script>

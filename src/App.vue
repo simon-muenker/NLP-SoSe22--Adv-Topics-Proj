@@ -2,117 +2,86 @@
   <template v-if="isLoaded">
     <Sidebar pos="left">
       <Select
-          :onUpdate="load_dataset"
+          :onUpdate="loadDataset"
           :options="datasets"
           :value="activeDataset"
           title="Datasets"
       />
       <Slider
           :onUpdate="setActiveCluster"
-          :options="cluster"
+          :options="clusters"
           direction="ltr"
           title="Cluster Slider (by DBSCAN)"
       />
       <Slider
           :onUpdate="setActiveGroup"
-          :options="group"
+          :options="groups"
           direction="ttb"
           style="height: 768px"
           title="Group Slider (by Month)"
       />
     </Sidebar>
-    <Graph
-        :cluster="activeCluster"
-        :data="records"
-        :group="activeGroup"
-    />
+    <Graph/>
     <Sidebar pos="right">
-      <SampleList
-          :cluster="activeCluster"
-          :data="records"
-          :group="activeGroup"
-      />
+      <RecordsList/>
     </Sidebar>
   </template>
   <template v-else>
-    <Popup>
-      <GridLoader/>
-    </Popup>
+    <Loader/>
   </template>
 </template>
 
 <script>
-import Sidebar from "@/components/layout/Sidebar.vue";
-import Popup from "@/components/layout/Popup.vue";
+import Sidebar from "@/components/Layout/Sidebar.vue"
 
-import Slider from "@/components/UI/Slider.vue";
-import Graph from '@/components/graph/Graph.vue'
-import SampleList from "@/components/SampleList.vue";
-import Select from "@/components/UI/Select.vue";
+import Slider from "@/components/UI/Slider.vue"
+import Graph from '@/components/Graph/Graph.vue'
+import RecordsList from "@/components/RecordsList.vue"
+import Select from "@/components/UI/Select.vue"
+import Loader from "@/components/UI/Loader.vue"
 
-import GridLoader from 'vue-spinner/src/GridLoader.vue'
-
-import {API, DATASETS, load_data} from "@/components/Data";
+import {useDataset} from "@/stores/dataset"
+import {storeToRefs} from "pinia/dist/pinia"
 
 import './App.css'
 
+const DATASETS = [
+  {name: "mask.sample.50.coronabert"},
+  {name: "mask.sample.250.coronabert"}
+]
 
 export default {
   name: 'App',
   components: {
-    SampleList,
+    Loader,
+    RecordsList,
     Sidebar,
-    Popup,
     Slider,
     Select,
-    Graph,
-    GridLoader
+    Graph
+  },
+  setup() {
+    const {records, groups, clusters, isLoaded, activeDataset} = storeToRefs(useDataset())
+    const {loadDataset, setActiveGroup, setActiveCluster} = useDataset()
+
+    return {
+      records,
+      groups,
+      clusters,
+      isLoaded,
+      activeDataset,
+      loadDataset,
+      setActiveGroup,
+      setActiveCluster
+    }
   },
   data() {
     return {
-      datasets: DATASETS,
-      records: [],
-      group: [],
-      cluster: [],
-      activeDataset: null,
-      activeGroup: null,
-      activeCluster: null,
-      isLoaded: null,
-      label: {
-        all: 'All',
-        cluster: 'cluster',
-        group: 'datetime'
-      }
+      datasets: DATASETS
     }
   },
   mounted() {
-    this.load_dataset(this.datasets[0])
-  },
-  methods: {
-    load_dataset(dataset) {
-      this.isLoaded = false
-
-      load_data(API.concat(dataset.name, '.csv')).then((values) => {
-        this.records = values
-        this.cluster = [this.label.all].concat(Array.from(new Set(values.map(a => a[this.label.cluster]))).sort())
-        this.group = [this.label.all].concat(Array.from(new Set(values.map(a => a[this.label.group]))))
-
-        this.setActiveCluster(this.label.all)
-        this.setActiveGroup(this.label.all)
-        this.setActiveDataset(dataset.name)
-
-        this.isLoaded = true
-      })
-    },
-    setActiveDataset(value) {
-      this.activeDataset = value
-    },
-    setActiveCluster(value) {
-      this.activeCluster = value
-    },
-    setActiveGroup(value) {
-      this.activeGroup = value
-    }
+    this.loadDataset(this.datasets[0])
   }
 }
 </script>

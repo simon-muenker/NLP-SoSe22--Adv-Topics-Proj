@@ -8,7 +8,12 @@
 <script>
 export default {
   name: "Panel",
-  props: ['title'],
+  props: {
+    title: {
+      type: String,
+      default: 'Sidebar Title'
+    }
+  },
 }
 </script>
 
@@ -18,7 +23,7 @@ section {
 }
 
 h3 {
-  font-size: 1.1rem;
+  font-size: 1.12rem;
   margin-bottom: 1rem;
 }
 </style>
