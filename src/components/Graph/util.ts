@@ -3,16 +3,8 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 
 const COLORS: Record<string, THREE.Color> = {
-    '-1': new THREE.Color(0xCCCCCC),
-    '0': new THREE.Color(0x4C72B0),
-    '1': new THREE.Color(0xDD8452),
-    '2': new THREE.Color(0x55A868),
-    '3': new THREE.Color(0x8172B3),
-    '4': new THREE.Color(0x937860),
-    '5': new THREE.Color(0xDA8BC3),
-    '6': new THREE.Color(0x8C8C8C),
-    '7': new THREE.Color(0xCCB974),
-    '8': new THREE.Color(0x64B5CD)
+    'positive': new THREE.Color(0x55A868),
+    'negative': new THREE.Color(0xDD8452)
 }
 
 
@@ -36,7 +28,7 @@ export const createCamera = () => {
         256
     )
 
-    camera.position.z = 32
+    camera.position.z = 40
 
     return camera
 }
@@ -44,8 +36,8 @@ export const createCamera = () => {
 export const createControls = (camera: THREE.Camera, renderer: THREE.Renderer) => {
     let controls = new OrbitControls(camera, renderer.domElement)
 
-    controls.minDistance = 2
-    controls.maxDistance = 32
+    controls.minDistance = 8
+    controls.maxDistance = 64
 
     controls.enableDamping = true
     controls.dampingFactor = 0.1
@@ -65,7 +57,7 @@ export const createMesh = (point: Record<string, any>) => {
             16,
         ),
         new THREE.MeshBasicMaterial({
-            color: COLORS[point['cluster']],
+            color: COLORS[point['datetime']],
             transparent: true,
             opacity: 0.8
 

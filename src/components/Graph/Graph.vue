@@ -1,6 +1,5 @@
 <template>
   <div style="display: none">
-    {{ activeCluster }}
     {{ activeGroup }}
   </div>
 </template>
@@ -17,12 +16,11 @@ import {useDataset} from "@/stores/dataset"
 export default {
   name: 'Graph',
   setup() {
-    const {records, activeGroup, activeCluster} = storeToRefs(useDataset())
+    const {records, activeGroup} = storeToRefs(useDataset())
 
     return {
       records,
-      activeCluster,
-      activeGroup
+      activeGroup,
     }
   },
   data() {

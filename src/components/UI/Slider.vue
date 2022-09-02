@@ -1,14 +1,16 @@
 <template>
   <Panel :title="title">
-    <vue-slider
-        :data="options"
-        :direction="direction"
-        :marks="true"
-        :style="style"
-        tooltip="none"
-        @change="val => onUpdate(val)"
-    >
-    </vue-slider>
+    <div class="slide-container">
+      <vue-slider
+          :data="options"
+          :direction="direction"
+          :marks="true"
+          :style="style"
+          tooltip="none"
+          @change="val => onUpdate(val)"
+      >
+      </vue-slider>
+    </div>
   </Panel>
 </template>
 
@@ -47,4 +49,7 @@ export default {
 </script>
 
 <style scoped>
+.slide-container {
+  margin: 0 24px 24px 24px;
+}
 </style>

@@ -3,7 +3,7 @@ import {acceptHMRUpdate, defineStore} from 'pinia'
 // @ts-ignore
 import {parse, ParseResult} from "papaparse"
 
-const API = 'https://data.sci.xciv.de/temporal_corona_clustering/'
+const API = 'https://data.sci.xciv.de/imdb/'
 
 async function load_data(url: any): Promise<any> {
     // @ts-ignore
@@ -23,7 +23,6 @@ async function load_data(url: any): Promise<any> {
 
 const LABEL = {
     all: 'All',
-    cluster: 'cluster',
     group: 'datetime'
 }
 
@@ -39,10 +38,8 @@ export const useDataset = defineStore('dataset', {
         return {
             records: [],
             groups: [] as String[],
-            clusters: [] as String[],
             activeDataset: '',
             activeGroup: '',
-            activeCluster: '',
             isLoaded: false,
         }
     },
@@ -54,10 +51,8 @@ export const useDataset = defineStore('dataset', {
 
                 // @ts-ignore
                 this.records = values.map(obj => ({...obj, show: true}))
-                this.clusters = [LABEL.all].concat(toSet(values, LABEL.cluster).sort())
                 this.groups = [LABEL.all].concat(toSet(values, LABEL.group))
 
-                this.setActiveCluster(LABEL.all)
                 this.setActiveGroup(LABEL.all)
                 this.setActiveDataset(dataset.name)
 
@@ -67,22 +62,13 @@ export const useDataset = defineStore('dataset', {
         setActiveDataset(value: string) {
             this.activeDataset = value
         },
-        setActiveCluster(value: string) {
-            this.activeCluster = value
-            this.filter()
-        },
         setActiveGroup(value: string) {
             this.activeGroup = value
             this.filter()
         },
         filter() {
             this.records.forEach((point: Record<any, any>) => {
-                point.show = (
-                    (this.activeCluster === "All" && this.activeGroup === "All") ||
-                    (point.cluster === this.activeCluster && this.activeGroup === "All") ||
-                    (this.activeCluster === "All" && point.datetime === this.activeGroup) ||
-                    (point.cluster === this.activeCluster && point.datetime === this.activeGroup)
-                )
+                point.show = this.activeGroup === "All" || point.datetime === this.activeGroup
             })
         }
     },

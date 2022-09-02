@@ -31,8 +31,7 @@ article {
   z-index: 999;
 
   width: 288px;
-  height: 100vh;
-  overflow-y: scroll;
+  height: auto;
 
   background: var(--color-background-translucent);
   backdrop-filter: blur(16px);
@@ -48,7 +47,7 @@ article {
 
 @media screen and (min-width: 1440px) {
   article {
-    width: 360px
+    width: 424px
   }
 }
 

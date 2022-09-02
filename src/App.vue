@@ -8,23 +8,13 @@
           title="Datasets"
       />
       <Slider
-          :onUpdate="setActiveCluster"
-          :options="clusters"
-          direction="ltr"
-          title="Cluster Slider (by DBSCAN)"
-      />
-      <Slider
           :onUpdate="setActiveGroup"
           :options="groups"
-          direction="ttb"
-          style="height: 768px"
-          title="Group Slider (by Month)"
+          direction="ltr"
+          title="Group Slider (by Sentiment)"
       />
     </Sidebar>
     <Graph/>
-    <Sidebar pos="right">
-      <RecordsList/>
-    </Sidebar>
   </template>
   <template v-else>
     <Loader/>
@@ -36,7 +26,6 @@ import Sidebar from "@/components/Layout/Sidebar.vue"
 
 import Slider from "@/components/UI/Slider.vue"
 import Graph from '@/components/Graph/Graph.vue'
-import RecordsList from "@/components/RecordsList.vue"
 import Select from "@/components/UI/Select.vue"
 import Loader from "@/components/UI/Loader.vue"
 
@@ -46,33 +35,32 @@ import {storeToRefs} from "pinia/dist/pinia"
 import './App.css'
 
 const DATASETS = [
-  {name: "mask.sample.50.coronabert"},
-  {name: "mask.sample.250.coronabert"}
+  {name: "bert-base-uncased"},
+  {name: "textattack.bert-base-uncased"},
+  {name: "fabriceyhc.bert-base-uncased"},
+  {name: "wakaka.bert-base-uncased"}
 ]
 
 export default {
   name: 'App',
   components: {
     Loader,
-    RecordsList,
     Sidebar,
     Slider,
     Select,
     Graph
   },
   setup() {
-    const {records, groups, clusters, isLoaded, activeDataset} = storeToRefs(useDataset())
-    const {loadDataset, setActiveGroup, setActiveCluster} = useDataset()
+    const {records, groups, isLoaded, activeDataset} = storeToRefs(useDataset())
+    const {loadDataset, setActiveGroup} = useDataset()
 
     return {
       records,
       groups,
-      clusters,
       isLoaded,
       activeDataset,
       loadDataset,
-      setActiveGroup,
-      setActiveCluster
+      setActiveGroup
     }
   },
   data() {
