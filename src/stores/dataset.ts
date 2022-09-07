@@ -3,7 +3,7 @@ import {acceptHMRUpdate, defineStore} from 'pinia'
 // @ts-ignore
 import {parse, ParseResult} from "papaparse"
 
-const API = 'https://data.sci.xciv.de/temporal_corona_clustering/'
+import { API } from "@/config"
 
 async function load_data(url: any): Promise<any> {
     // @ts-ignore

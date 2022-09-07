@@ -45,10 +45,7 @@ import {storeToRefs} from "pinia/dist/pinia"
 
 import './App.css'
 
-const DATASETS = [
-  {name: "mask.sample.50.coronabert"},
-  {name: "mask.sample.250.coronabert"}
-]
+import { DATASETS } from "@/config"
 
 export default {
   name: 'App',
